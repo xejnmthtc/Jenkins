@@ -1,57 +1,34 @@
 pipeline{
-    agent any
+    agent{
+        label "node"
+    }
     stages{
-        stage("fetching"){
+        stage("A"){
             steps{
-                //
+                echo "========executing A========"
             }
-            
-        }
-        stage("building"){
-            steps{
-                //
+            post{
+                always{
+                    echo "========always========"
+                }
+                success{
+                    echo "========A executed successfully========"
+                }
+                failure{
+                    echo "========A execution failed========"
+                }
             }
-            
         }
-        stage("testing"){
-            steps{
-                //
-            }
-            
-        }
-
-        stage("deploying"){
-            steps{
-                //
-            }
-            
-        }
-        
     }
     post{
         always{
-            //
+            echo "========always========"
         }
         success{
-            //
+            echo "========pipeline executed successfully ========"
         }
         failure{
-            //
+            echo "========pipeline execution failed========"
         }
     }
-
-   
 }
-
-
-// retry(4){
-//    //
-//  }
-//
-// timeout(time: 3,unit: 'SECONDS'){
-//    //
-//  {
-//
-//  environment{
-//    NAME='name'
-//  }

@@ -1,27 +1,22 @@
-pipeline {
-    agent any
-    stages {
-        stage('build') {
-            steps {
-                sh ' echo building ........'
-            }
-        
-        }
-        stage('test') { 
-            steps {
-                echo 'testing ........'
+
+pipeline{
+    agent any 
+    stages{
+        stage("cloning ..."){
+            steps{
+                checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/devopsPRO27/requests']]])
+
             }
         }
-        stage('deploy') {
-            steps {
-                echo 'deploying ........'
+        stage("building ..."){
+            steps{
+                sh 'python3 http_e.py'
             }
         }
-        stage('party') {
-            steps {
-                echo ' dancing .....  moon walk   mk RIP '
+        stage("testing ..."){
+            steps{
+                sh 'pytest TestRest.py'
             }
         }
     }
-    
 }
